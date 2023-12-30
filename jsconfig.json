@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "lib": [
+            "ES2022",
+            "DOM",
+            "DOM.Iterable",
+            "WebWorker"
+        ],
+        "strict": true,
+        "module": "ES2022",
+        "useDefineForClassFields": true,
+        "moduleResolution": "bundler"
+    },
+    "include": [
+        "src/**/*.js"
+    ],
+    "exclude": [
+        "strict-tauri/**/*"
+    ]
+}

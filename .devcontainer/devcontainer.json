@@ -1,0 +1,61 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/debian
+{
+    "name": "Debian",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    "dockerFile": "Dockerfile",
+    "features": {
+        "ghcr.io/devcontainers/features/desktop-lite:1": {
+            "version": "latest",
+            "noVncVersion": "1.2.0",
+            "password": "vscode",
+            "webPort": "6080",
+            "vncPort": "5901"
+        },
+        "ghcr.io/devcontainers/features/node:1": {
+            "nodeGypDependencies": true,
+            "version": "lts",
+            "nvmVersion": "latest"
+        },
+        "ghcr.io/devcontainers/features/rust:1": {
+            "version": "latest",
+            "profile": "default"
+        },
+        "ghcr.io/lee-orr/rusty-dev-containers/cargo-binstall:0": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "tauri-apps.tauri-vscode",
+                "rust-lang.rust-analyzer",
+                "jeremyljackson.vs-docblock",
+                "runem.lit-plugin",
+                "lit.lit-snippets",
+                "rajdeepchandra.spectrum-design-tokens-for-vscode",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "serayuzgur.crates",
+                "streetsidesoftware.code-spell-checker",
+                "tamasfe.even-better-toml",
+                "capaj.vscode-exports-autocomplete",
+                "christian-kohler.npm-intellisense",
+                "swellaby.rust-pack",
+                "redhat.vscode-yaml"
+            ]
+        }
+    },
+    "forwardPorts": [
+        6080,
+        5901
+    ],
+    "portsAttributes": {
+        "6080": {
+            "label": "desktop"
+        },
+        "5901": {
+            "label": "desktop-vnc"
+        }
+    }
+    // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+    // "remoteUser": "root"
+}

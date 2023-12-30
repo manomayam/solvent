@@ -1,0 +1,75 @@
+{
+    "name": "app-shell",
+    "description": "Webcomponent app-shell following open-wc recommendations",
+    "license": "MIT",
+    "author": "app-shell",
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "tauri": "tauri",
+        "lint": "eslint --ext .js,.html . --ignore-path .eslintignore && prettier \"**/*.js\" --check --ignore-path .eslintignore",
+        "format": "eslint --ext .js,.html . --fix --ignore-path .eslintignore && prettier \"**/*.js\" --write --ignore-path .eslintignore",
+        "test": "web-test-runner --coverage",
+        "test:watch": "web-test-runner --watch",
+        "storybook": "pnpm run analyze -- --exclude dist && web-dev-server -c .storybook/server.mjs",
+        "storybook:build": "pnpm run analyze -- --exclude dist && build-storybook",
+        "build": "rimraf dist && rollup -c rollup.config.js && pnpm run analyze -- --exclude dist",
+        "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
+        "analyze": "cem analyze --litelement",
+        "start": "web-dev-server"
+    },
+    "dependencies": {
+        "lit": "^2.0.2"
+    },
+    "devDependencies": {
+        "@babel/plugin-syntax-import-assertions": "^7.23.3",
+        "@babel/preset-env": "^7.16.4",
+        "@custom-elements-manifest/analyzer": "^0.4.17",
+        "@open-wc/building-rollup": "^2.0.2",
+        "@open-wc/eslint-config": "^9.2.1",
+        "@open-wc/testing": "^3.1.6",
+        "@rollup/plugin-babel": "^5.3.0",
+        "@rollup/plugin-node-resolve": "^13.0.6",
+        "@tauri-apps/cli": "^1.5.8",
+        "@web/dev-server": "^0.1.34",
+        "@web/dev-server-storybook": "^0.5.4",
+        "@web/rollup-plugin-html": "^1.11.0",
+        "@web/rollup-plugin-import-meta-assets": "^1.0.7",
+        "@web/test-runner": "^0.14.0",
+        "babel-plugin-template-html-minifier": "^4.1.0",
+        "deepmerge": "^4.2.2",
+        "eslint": "^8.31.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-config-tjw-jsdoc": "^1.0.5",
+        "husky": "^4.3.8",
+        "lint-staged": "^10.5.4",
+        "prettier": "^2.4.1",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.60.0",
+        "rollup-plugin-esbuild": "^5.0.0",
+        "rollup-plugin-workbox": "^6.2.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "@open-wc",
+            "prettier",
+            "tjw-jsdoc"
+        ]
+    },
+    "prettier": {
+        "singleQuote": true,
+        "arrowParens": "always"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "eslint --fix",
+            "prettier --write"
+        ]
+    },
+    "customElements": "custom-elements.json"
+}
