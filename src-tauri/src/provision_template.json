@@ -1,0 +1,15 @@
+{
+    "label": "Test pod",
+    "description": "Pod for testing",
+    "storage": {
+        "space": {
+            "root_uri": "http://localhost:3000/",
+            "owner_id": "http://localhost:3000/card#me"
+        },
+        "repo": {
+            "backend": {
+                "root_dir_path": "/"
+            }
+        }
+    }
+}

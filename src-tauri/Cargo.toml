@@ -17,6 +17,49 @@ tauri = { version = "1.5", features = ["shell-open"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
+manas_server = { git = "https://github.com/manomayam/manas.git", default-features = false }
+manas_space = { git = "https://github.com/manomayam/manas.git" }
+manas_storage = { git = "https://github.com/manomayam/manas.git" }
+manas_podverse = { git = "https://github.com/manomayam/manas.git" }
+manas_repo_layers = { git = "https://github.com/manomayam/manas.git", features = [
+    "patching",
+    "validating",
+    "dconneging",
+] }
+manas_repo_opendal = { git = "https://github.com/manomayam/manas.git", features = [
+    "backend-fs",
+] }
+manas_http = { git = "https://github.com/manomayam/manas.git", features = [
+    "service",
+] }
+name_locker = { git = "https://github.com/manomayam/manas.git", features = [
+    "inmem",
+] }
+http_uri = { git = "https://github.com/manomayam/manas.git", features = [
+    "serde",
+] }
+webid = { git = "https://github.com/manomayam/manas.git", features = ["serde"] }
+uuid = { version = "1.4.1", features = ["v4"] }
+secrecy = "0.8.0"
+once_cell = "1.18.0"
+thiserror = "1.0.49"
+tracing = "0.1.37"
+tokio = { version = "1.33.0", features = ["fs"] }
+tower = "0.4.13"
+opendal = { version = "^0.42.0", git = "https://github.com/apache/incubator-opendal/", tag = "v0.42.0-rc.3", features = [
+    "rustls",
+    "services-fs",
+] }
+futures = "0.3.28"
+hyper = { version = "0.14.27", features = ["stream"] }
+http = "0.2.9"
+http-api-problem = { version = "0.57.0", features = ["api-error", "hyper"] }
+portpicker = "0.1.1"
+tower-http = { version = "0.4.1", features = ["cors", "catch-panic"] }
+tauri-plugin-persisted-scope = "0.1.3"
+tauri-plugin-localhost = "0.1.0"
+form_urlencoded = "1.2.0"
+
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem
 # DO NOT REMOVE!!

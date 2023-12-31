@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta name="Description" content="Put your description here." />
+    <base href="/" />
+
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-color: #ededed;
+      }
+    </style>
+    <title>app-shell</title>
+    <script type="module" src="./mod.js"></script>
+  </head>
+
+  <body>
+    <!-- <app-shell></app-shell> -->
+    <header>
+      <h1>SolidOS Native.</h1>
+    </header>
+    <main>
+      <section>
+        <h2>Provisioned Pods</h2>
+        <ol id="provisioned-pods"></ol>
+      </section>
+      <section>
+        Go to
+        <a href="./solidos/index.html?root_uri=http%3A%2F%2Flocalhost%3A3000%2F"
+          >SolidOS</a
+        >
+      </section>
+    </main>
+
+    <script type="module" src="./app-shell.js"></script>
+  </body>
+</html>

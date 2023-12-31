@@ -1,21 +1,28 @@
+/**
+ * @file Configuration for WDS.
+ */
+
 // import { hmrPlugin, presets } from '@open-wc/dev-server-hmr';
 
 /** Use Hot Module replacement by adding --hmr to the start command */
 const hmr = process.argv.includes('--hmr');
 
 export default /** @type {import('@web/dev-server').DevServerConfig} */ ({
-  open: '/',
+  port: 1420,
+  rootDir: 'www',
+  preserveSymlinks: true,
+  open: false,
   watch: !hmr,
   /** Resolve bare module imports */
   nodeResolve: {
     exportConditions: ['browser', 'development'],
   },
-  
+
   /** Compile JS for older browsers. Requires @web/dev-server-esbuild plugin */
   // esbuildTarget: 'auto'
 
   /** Set appIndex to enable SPA routing */
-  appIndex: './index.html',
+  // appIndex: './index.html',
 
   plugins: [
     /** Use Hot Module Replacement by uncommenting. Requires @open-wc/dev-server-hmr plugin */

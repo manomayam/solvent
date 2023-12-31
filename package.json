@@ -6,20 +6,24 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "tauri": "tauri",
+        "tauri": "WEBKIT_DISABLE_COMPOSITING_MODE=1 pnpm run tauri:normal",
+        "tauri:normal": "tauri",
         "lint": "eslint --ext .js,.html . --ignore-path .eslintignore && prettier \"**/*.js\" --check --ignore-path .eslintignore",
         "format": "eslint --ext .js,.html . --fix --ignore-path .eslintignore && prettier \"**/*.js\" --write --ignore-path .eslintignore",
         "test": "web-test-runner --coverage",
         "test:watch": "web-test-runner --watch",
-        "storybook": "pnpm run analyze -- --exclude dist && web-dev-server -c .storybook/server.mjs",
-        "storybook:build": "pnpm run analyze -- --exclude dist && build-storybook",
-        "build": "rimraf dist && rollup -c rollup.config.js && pnpm run analyze -- --exclude dist",
+        "storybook": "pnpm run analyze --exclude dist && web-dev-server -c .storybook/server.mjs",
+        "storybook:build": "pnpm run analyze --exclude dist && build-storybook",
+        "build": "rimraf dist && rollup -c rollup.config.js && pnpm analyze --exclude dist",
         "start:build": "web-dev-server --root-dir dist --app-index index.html --open",
         "analyze": "cem analyze --litelement",
         "start": "web-dev-server"
     },
     "dependencies": {
-        "lit": "^2.0.2"
+        "@tauri-apps/api": "^1.5.3",
+        "lit": "^2.0.2",
+        "mashlib": "^1.8.9",
+        "workbox-window": "^7.0.0"
     },
     "devDependencies": {
         "@babel/plugin-syntax-import-assertions": "^7.23.3",
@@ -40,7 +44,7 @@
         "deepmerge": "^4.2.2",
         "eslint": "^8.31.0",
         "eslint-config-prettier": "^8.3.0",
-        "eslint-config-tjw-jsdoc": "^1.0.5",
+        "eslint-plugin-jsdoc": "^1.1.3",
         "husky": "^4.3.8",
         "lint-staged": "^10.5.4",
         "prettier": "^2.4.1",
@@ -53,23 +57,15 @@
         "extends": [
             "@open-wc",
             "prettier",
-            "tjw-jsdoc"
+            "plugin:jsdoc/recommended"
+        ],
+        "plugins": [
+            "jsdoc"
         ]
     },
     "prettier": {
         "singleQuote": true,
         "arrowParens": "always"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "*.js": [
-            "eslint --fix",
-            "prettier --write"
-        ]
     },
     "customElements": "custom-elements.json"
 }
