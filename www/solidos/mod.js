@@ -4,8 +4,8 @@
 // @ts-nocheck
 
 import './setup_sw.js';
-import { podverseConfig } from '../podverse_manager/mod.js';
-import { PodConfig } from '../podverse_manager/config.js';
+import { podverseConfig } from '../podverse-manager/mod.js';
+import { PodConfig } from '../podverse-manager/config.js';
 
 console.log('In solidos/index.ts');
 

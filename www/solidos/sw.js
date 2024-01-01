@@ -31,7 +31,7 @@ let podverseProxySessionSecretToken;
 /**
  * Podverse proxy endpoint.
  *
- * @type {import("../podverse_manager/config.js").PodverseConfig}
+ * @type {import("../podverse-manager/config.js").PodverseConfig}
  */
 let podverseConfig;
 

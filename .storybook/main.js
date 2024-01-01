@@ -1,3 +1,3 @@
-module.exports = {
-  stories: ['../src/**/*.stories.{js,md,mdx}'],
+export default {
+  stories: ['../www/**/*.stories.{js,md,mdx}'],
 };

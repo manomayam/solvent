@@ -2,11 +2,11 @@
  * @file Stories for app-shell> .
  */
 
-import { html } from 'lit';
+import { html } from '@spectrum-web-components/base';
 import './app-shell.js';
 
 /**
- * @typedef {import('lit').TemplateResult} TemplateResult
+ * @typedef {import('@spectrum-web-components/base').TemplateResult} TemplateResult
  */
 
 export default {

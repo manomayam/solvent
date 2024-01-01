@@ -3,7 +3,7 @@ import {
   PODVERSE_PROXY_ENDPOINT,
   PODVERSE_PROXY_SESSION_SECRET_TOKEN,
   provisionProxyPod,
-} from './podverse_manager/mod.js';
+} from './podverse-manager/mod.js';
 
 async function logPodverseProxyInfo() {
   console.log({

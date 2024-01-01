@@ -7,16 +7,10 @@
  * @property {string} root_dir_path - Root directory path.
  */
 
-/** @type {RepoBackendConfig} */
-export let RepoBackendConfig;
-
 /**
  * @typedef {Object} RepoConfig - Repo configuration.
  * @property {RepoBackendConfig} backend - backend config.
  */
-
-/** @type {RepoConfig} */
-export let RepoConfig;
 
 /**
  * @typedef {{
@@ -25,9 +19,6 @@ export let RepoConfig;
  * }} StorageSpaceConfig - Storage space configuration.
  */
 
-/** @type {StorageSpaceConfig} */
-export let StorageSpaceConfig;
-
 /**
  * @typedef {{
  *  space: StorageSpaceConfig,
@@ -35,10 +26,7 @@ export let StorageSpaceConfig;
  * }} StorageConfig - Storage configuration.
  */
 
-/** @type {StorageConfig} */
-export let StorageConfig;
-
-/**
+/**w
  * @typedef {{
  *  storage: StorageConfig,
  *  label?: string,
@@ -46,14 +34,8 @@ export let StorageConfig;
  * }} PodConfig - Pod configuration.
  */
 
-/** @type {PodConfig} */
-export let PodConfig;
-
 /**
  * @typedef {{
  *  pods: PodConfig[]
  * }} PodverseConfig - Podverse configuration.
  */
-
-/** @type {PodverseConfig} */
-export let PodverseConfig;
