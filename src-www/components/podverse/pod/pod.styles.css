@@ -1,0 +1,25 @@
+sp-table {
+  max-inline-size: max-content;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+sp-table-head-cell {
+  text-align: end;
+}
+
+sp-table-row {
+    display: contents;
+}
+
+header {
+  display: flex;
+}
+
+#actions {
+  margin-inline-start: auto;
+}
+
+sp-divider {
+  margin-block: var(--spectrum-spacing-100);
+}

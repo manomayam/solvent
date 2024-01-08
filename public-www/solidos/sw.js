@@ -31,7 +31,7 @@ let podverseProxySessionSecretToken;
 /**
  * Podverse proxy endpoint.
  *
- * @type {import("../podverse-manager/config.js").PodverseConfig}
+ * @type {import("../src-www/podverse-manager/config.js").PodverseConfig}
  */
 let podverseConfig;
 
@@ -79,7 +79,7 @@ sw.addEventListener('message', (event) => {
 function isProxiedUri(uri) {
   clLog('in isProxiedUri');
   let isProxied = podverseConfig.pods.some((pod) =>
-    uri.startsWith(pod.storage.space.root_uri)
+    uri.startsWith(pod.storage.space.root_uri),
   );
   clLog({ uri, isProxied });
   return isProxied;

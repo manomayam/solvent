@@ -2,21 +2,23 @@
  * @overview Defines `sn-pod` component.
  */
 
-import { SpectrumElement, css, html } from '@spectrum-web-components/base';
+import { SpectrumElement } from '@spectrum-web-components/base';
+import { css, html, unsafeCSS } from 'lit';
 import '@spectrum-web-components/divider/sp-divider.js';
 import '@spectrum-web-components/table/elements.js';
 import { nothing } from '@spectrum-web-components/base/src/html.js';
-import headingStyles from "@spectrum-web-components/styles/heading.js";
+import headingStyles from '@spectrum-web-components/styles/heading.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
+
+import podStyles from './pod.styles.css?inline';
+import SNBase from '../../base/base-component.js';
 
 /**
  * @element sn-pod
- * 
+ *
  * @slot actions Any actions.
  */
-export class Pod extends SpectrumElement {
-  static is = 'sn-pod';
-
+export class Pod extends SNBase {
   /** @type {import("@spectrum-web-components/base").PropertyDeclarations} */
   static properties = {
     config: {
@@ -25,23 +27,7 @@ export class Pod extends SpectrumElement {
     },
   };
 
-  static styles = [
-    headingStyles,
-    bodyStyles,
-    css`
-      sp-table-head-cell {
-        text-align: end;
-      }
-
-      header {
-        display: flex;
-      }
-
-      #actions {
-        margin-inline-start: auto;
-      }
-    `
-  ];
+  static styles = [...headingStyles, ...bodyStyles, unsafeCSS(podStyles)];
 
   constructor() {
     super();

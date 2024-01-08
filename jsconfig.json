@@ -12,10 +12,14 @@
         "module": "ES2022",
         "target": "ES2022",
         "useDefineForClassFields": true,
-        "moduleResolution": "bundler"
+        "moduleResolution": "bundler",
+        "types": [
+            "vite/client"
+        ]
     },
     "include": [
-        "www/**/*.js"
+        "src-www/**/*.js",
+        "public-www/sw.js"
     ],
     "exclude": [
         "src-tauri/**/*"

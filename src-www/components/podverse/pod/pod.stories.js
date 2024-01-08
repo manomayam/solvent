@@ -1,7 +1,7 @@
-import './Pod.js';
-import { html } from '@spectrum-web-components/base';
+import './pod.component.js';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/src/themes.js';
+import { html } from 'lit';
 
 export default {
   title: 'Podverse/Pod',
@@ -14,11 +14,7 @@ export default {
  * }} args
  */
 const Template = ({ config }) => {
-  return html`
-    <sp-theme theme="spectrum" color="light" scale="medium">
-      <sn-pod .config=${config}></sn-pod>
-    </sp-theme>
-  `;
+  return html` <sn-pod .config=${config}></sn-pod> `;
 };
 
 export const Simple = Template.bind({});
