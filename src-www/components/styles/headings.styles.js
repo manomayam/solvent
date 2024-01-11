@@ -1,3 +1,0 @@
-/**
- * @file Styles for headings.
- */

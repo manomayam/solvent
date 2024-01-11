@@ -20,8 +20,12 @@
         "build-storybook": "storybook build"
     },
     "dependencies": {
+        "@spectrum-web-components/action-menu": "^0.40.2",
         "@spectrum-web-components/base": "^0.40.2",
+        "@spectrum-web-components/card": "^0.40.2",
         "@spectrum-web-components/divider": "^0.40.2",
+        "@spectrum-web-components/link": "^0.40.2",
+        "@spectrum-web-components/menu-item": "^0.5.4",
         "@spectrum-web-components/styles": "^0.40.2",
         "@spectrum-web-components/table": "^0.40.2",
         "@spectrum-web-components/theme": "^0.40.2",

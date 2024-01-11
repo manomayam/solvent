@@ -1,7 +1,10 @@
+@import url('../../base/base.styles.css');
+
 sp-table {
   max-inline-size: max-content;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-block-start: var(--spectrum-spacing-100);
 }
 
 sp-table-head-cell {
@@ -9,17 +12,5 @@ sp-table-head-cell {
 }
 
 sp-table-row {
-    display: contents;
-}
-
-header {
-  display: flex;
-}
-
-#actions {
-  margin-inline-start: auto;
-}
-
-sp-divider {
-  margin-block: var(--spectrum-spacing-100);
+  display: contents;
 }
