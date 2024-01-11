@@ -1,0 +1,5 @@
+@import url('../../base/base.styles.css');
+
+ul {
+    list-style: square;
+}

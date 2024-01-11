@@ -1,6 +1,6 @@
 import SNBase from '../../base/base.component.js';
 import podInfoStyles from './pod-info.styles.css?inline';
-import '@spectrum-web-components/action-menu/sp-action-menu.js';
+import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/link/sp-link.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
@@ -8,17 +8,30 @@ import '@spectrum-web-components/table/elements.js';
 import { html, nothing, unsafeCSS } from 'lit';
 
 /**
+ * @typedef {Object} PodAction - Pod action.
+ * @property {string} action
+ * @property {string} label
+ */
+
+/**
  * @summary Pod info component.
  * @element pod-info
  *
- * @slot action
  * @fires action-select
  *
  */
 export class PodInfo extends SNBase {
+  /**
+   *
+   * @return  {import('lit').PropertyDeclarations}
+   */
   static get properties() {
     return {
       config: { type: Object, reflect: false },
+      actions: {
+        type: Array,
+        reflect: false,
+      },
     };
   }
 
@@ -33,6 +46,12 @@ export class PodInfo extends SNBase {
      * @type { PodConfig };
      */
     this.config;
+
+    /**
+     *
+     * @type {PodAction[]}
+     */
+    this.actions;
   }
 
   /**
@@ -53,6 +72,41 @@ export class PodInfo extends SNBase {
   };
 
   render() {
+    let actionMenu =
+      this.actions.length > 0
+        ? html`
+            <sp-action-menu
+              slot="actions"
+              label="Pod view actions"
+              @change="${this.onActionSelect}"
+            >
+              ${this.actions.map(
+                (action) => html`
+                  <sp-menu-item value=${action.action}
+                    >${action.label}</sp-menu-item
+                  >
+                `,
+              )}
+            </sp-action-menu>
+          `
+        : nothing;
+
+    let propTable = html`
+      <sp-table quiet>
+        <sp-table-row>
+          <sp-table-head-cell>Local folder:</sp-table-head-cell>
+          <sp-table-cell
+            >${this.config.storage.repo.backend.root_dir_path}</sp-table-cell
+          >
+        </sp-table-row>
+
+        <sp-table-row>
+          <sp-table-head-cell> Pod view root: </sp-table-head-cell>
+          <sp-table-cell> ${this.config.storage.space.root_uri} </sp-table-cell>
+        </sp-table-row>
+      </sp-table>
+    `;
+
     return html`
       <sp-card>
         <sp-link
@@ -61,13 +115,7 @@ export class PodInfo extends SNBase {
           >${this.config.label ?? 'Pod view'}</sp-link
         >
 
-        <sp-action-menu
-          slot="actions"
-          label="Pod view actions"
-          @change="${this.onActionSelect}"
-        >
-          <slot name="action"></slot>
-        </sp-action-menu>
+        ${actionMenu}
 
         <div slot="description">
           <div
@@ -76,23 +124,7 @@ export class PodInfo extends SNBase {
           >
             ${this.config.description ?? nothing}
           </div>
-
-          <sp-table quiet>
-            <sp-table-row>
-              <sp-table-head-cell>Local folder:</sp-table-head-cell>
-              <sp-table-cell
-                >${this.config.storage.repo.backend
-                  .root_dir_path}</sp-table-cell
-              >
-            </sp-table-row>
-
-            <sp-table-row>
-              <sp-table-head-cell> Pod view root: </sp-table-head-cell>
-              <sp-table-cell>
-                ${this.config.storage.space.root_uri}
-              </sp-table-cell>
-            </sp-table-row>
-          </sp-table>
+          ${propTable}
         </div>
       </sp-card>
     `;

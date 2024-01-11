@@ -14,3 +14,7 @@ sp-table-head-cell {
 sp-table-row {
   display: contents;
 }
+
+[slot="description"]::before {
+    content: '';
+}
