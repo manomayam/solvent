@@ -20,7 +20,7 @@
     "include": [
         "src-www/**/*.js",
         "public-www/sw.js"
-    ],
+, "src-www/components/podverse/pod-info/.stories.js", "src-www/components/podverse/podset-info/.stories.js", "src-www/components/podverse/podverse-manager/.stories.js", "src-www/components/podverse/podverse-manager/delete-pod-wizard/.stories.js"    ],
     "exclude": [
         "src-tauri/**/*"
     ]

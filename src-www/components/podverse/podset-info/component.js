@@ -1,5 +1,5 @@
 import SNBase from '../../base/base.component.js';
-import podsetInfoStyles from './podverse-info.styles.css?inline';
+import podsetInfoStyles from './styles.css?inline';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-new-item.js';
 import { html, unsafeCSS } from 'lit';
@@ -29,9 +29,34 @@ export class PodsetInfo extends SNBase {
 
     /**
      * Pod actions list.
-     * @type {import('../pod-info/pod-info.component.js').PodAction[]}
+     * @type {import('../pod-info/component.js').PodAction[]}
      */
     this.podActions;
+  }
+
+  /**
+   * Delegated listener for 'action-select' event on pod infos.
+   *
+   * @param   {import('../pod-info/component.js').ActionSelectEvent}  e
+   */
+  #onPodActionSelect = (e) => {
+    e.stopPropagation();
+    this.dispatchEvent(
+      new CustomEvent('pod-action-select', {
+        bubbles: true,
+        composed: true,
+        detail: e.detail,
+      }),
+    );
+  };
+
+  createRenderRoot() {
+    let shadowRoot = super.createRenderRoot();
+    shadowRoot.addEventListener(
+      'action-select',
+      /** @type {EventListener}*/ (this.#onPodActionSelect),
+    );
+    return shadowRoot;
   }
 
   render() {
@@ -39,11 +64,7 @@ export class PodsetInfo extends SNBase {
       <ul id="podset-list">
         ${repeat(
           this.config,
-          (podConfig) => {
-            podConfig.storage.space.root_uri +
-              '::' +
-              podConfig.storage.repo.backend.root_dir_path;
-          },
+          (podConfig) => podConfig.id,
           (podConfig) => html`
             <li>
               <sn-pod-info .config="${podConfig}" .actions=${this.podActions}>

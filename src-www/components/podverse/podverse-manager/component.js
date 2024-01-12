@@ -1,5 +1,5 @@
 import SNBase from '../../base/base.component.js';
-import podverseInfoStyles from './podverse-info.styles.css?inline';
+import podverseInfoStyles from './styles.css?inline';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-new-item.js';
 import { html, unsafeCSS } from 'lit';
@@ -24,6 +24,13 @@ export class PodverseManager extends SNBase {
     this.config;
   }
 
+  /**
+   * Delegated listener for 'action-select' event on pod infos.
+   *
+   * @param   {CustomEvent}  e
+   */
+  #onPodActionSelect = (e) => {};
+
   render() {
     return html`
       <div>
@@ -33,8 +40,16 @@ export class PodverseManager extends SNBase {
             Create new
           </sp-button>
         </div>
-        
-        <sn-podset-info .config=${this.config.pods}></sn-podset-info>
+
+        <sn-podset-info
+          .config=${this.config.pods}
+          .podActions=${[
+            {
+              action: 'delete',
+              label: 'Delete',
+            },
+          ]}
+        ></sn-podset-info>
       </div>
     `;
   }

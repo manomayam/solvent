@@ -4,6 +4,7 @@
 
 /** @type {PodConfig} */
 export const MOCK_POD1_CONFIG = {
+  id: '123',
   label: 'Test pod',
   description: 'Pod for testing',
   storage: {

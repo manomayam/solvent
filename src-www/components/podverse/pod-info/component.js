@@ -1,5 +1,5 @@
 import SNBase from '../../base/base.component.js';
-import podInfoStyles from './pod-info.styles.css?inline';
+import podInfoStyles from './styles.css?inline';
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/link/sp-link.js';
@@ -14,10 +14,14 @@ import { html, nothing, unsafeCSS } from 'lit';
  */
 
 /**
+ * @typedef {CustomEvent<{podId: string, action: string}>} ActionSelectEvent
+ */
+
+/**
  * @summary Pod info component.
  * @element pod-info
  *
- * @fires action-select
+ * @fires {ActionSelectEvent} action-select
  *
  */
 export class PodInfo extends SNBase {
@@ -49,9 +53,10 @@ export class PodInfo extends SNBase {
 
     /**
      *
-     * @type {PodAction[]}
+     * @type {PodAction[]?}
+     * 
      */
-    this.actions;
+    this.actions = [];
   }
 
   /**
@@ -59,11 +64,13 @@ export class PodInfo extends SNBase {
    *
    * @param   {*}  e
    */
-  onActionSelect = (e) => {
+  #onActionSelect = (e) => {
     this.dispatchEvent(
       new CustomEvent('action-select', {
         composed: true,
+        bubbles: true,
         detail: {
+          podId: this.config.id,
           action: e.target.value,
         },
       }),
@@ -73,12 +80,12 @@ export class PodInfo extends SNBase {
 
   render() {
     let actionMenu =
-      this.actions.length > 0
+      this.actions && this.actions.length > 0
         ? html`
             <sp-action-menu
               slot="actions"
               label="Pod view actions"
-              @change="${this.onActionSelect}"
+              @change="${this.#onActionSelect}"
             >
               ${this.actions.map(
                 (action) => html`

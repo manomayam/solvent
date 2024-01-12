@@ -2,6 +2,7 @@
 const config = {
   stories: [
     '../src-www/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+    '../src-www/**/.stories.@(js|jsx|mjs|ts|tsx)',
   ],
   addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
   framework: {

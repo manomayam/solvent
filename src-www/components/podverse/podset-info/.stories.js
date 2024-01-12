@@ -1,5 +1,5 @@
 import { html } from 'lit';
-import './sn-podset-info.js';
+import './mod.js';
 import { MOCK_PODVERSE1_CONFIG } from '../../../podverse-manager/mock-data.js';
 
 /**
@@ -14,12 +14,13 @@ export default {
  * @type {import("../../../mod.js").CSFStory}
  */
 export const Default = {
-  render: ({ config }) => html`
-    <sn-podset-info .config=${config}></sn-podset-info>
+  render: ({ config, podActions }) => html`
+    <sn-podset-info .config=${config} .podActions=${podActions}></sn-podset-info>
   `,
 
   args: {
     /** @type {PodConfig[]} */
     config: MOCK_PODVERSE1_CONFIG.pods,
+    podActions: []
   },
 };

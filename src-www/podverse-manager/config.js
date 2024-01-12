@@ -28,6 +28,7 @@
 
 /**w
  * @typedef {{
+ *  id: string,
  *  storage: StorageConfig,
  *  label?: string,
  *  description?: string,
