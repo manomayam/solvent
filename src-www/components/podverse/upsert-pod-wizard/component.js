@@ -2,6 +2,7 @@ import SNBase from '../../base/base.component.js';
 import '../pod-info/mod.js';
 import upsertPodWizardStyles from './styles.css?inline';
 import { Task } from '@lit/task';
+import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
@@ -10,6 +11,7 @@ import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { html, unsafeCSS } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { createRef, ref } from 'lit/directives/ref.js';
 
 /**
  * @typedef {{
@@ -47,12 +49,12 @@ export class UpsertPodWizard extends SNBase {
   #task = new Task(this, ([newPodConfig]) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0) {
           // @ts-ignore
           resolve({
             .../** @type {PodConfig | Omit<PodConfig, 'id'>} */ (newPodConfig),
             // @ts-ignore
-            id: newPodConfig.id || '12345',
+            id: newPodConfig.id || Math.random().toString(),
           });
         } else {
           reject();
@@ -60,6 +62,8 @@ export class UpsertPodWizard extends SNBase {
       }, 3000);
     });
   });
+
+  #formRef = createRef();
 
   constructor() {
     super();
@@ -87,15 +91,34 @@ export class UpsertPodWizard extends SNBase {
   }
 
   /**
-   * @param {SubmitEvent} e
+   * @param {SubmitEvent} ev
    */
-  #onFormSubmit(e) {
-    const formData = new FormData(/** @type {HTMLFormElement} */ (e.target));
+  #onFormSubmit(ev) {
+    ev.preventDefault();
+
+    // const formData = new FormData(/** @type {HTMLFormElement} */ (ev.target));
+
+    const form = /** @type {HTMLFormElement} */ (ev.target);
+    if (form.querySelector('[invalid]')) {
+      // TODO proper validation.
+      return;
+    }
+
+    const formData = new FormData();
+    form.querySelectorAll('[name]').forEach((el) => {
+      // @ts-ignore
+      formData.append(el.getAttribute('name'), el.value);
+    });
+
+    console.log({
+      ev,
+      formData,
+    });
 
     /** @type {Omit<PodConfig, 'id'> | PodConfig} */
     let newPodConfig = {
       id: this.currentPodConfig?.id,
-      label: formData.get('label')?.toString(),
+      label: formData.get('label')?.toString() || '',
       description: formData.get('description')?.toString(),
       storage: {
         repo: {
@@ -117,35 +140,31 @@ export class UpsertPodWizard extends SNBase {
     console.log({ newPodConfig });
 
     this.#task.run([newPodConfig]);
-    e.preventDefault();
   }
 
   #formTemplate() {
     return html`
-      <div class="wiz-page">
+      <div class="wiz-page wiz-page--form">
         <form
           id="pod-config-form"
-          @submit=${(/** @type {SubmitEvent} */ e) => this.#onFormSubmit(e)}
+          ${ref(this.#formRef)}
+          @submit=${this.#onFormSubmit}
         >
           <fieldset>
             <legend>Pod view configuration</legend>
 
-            <sp-field-label for="f-pod-label" required>Pod name</sp-field-label>
+            <sp-field-label for="f-pod-label" required sideAligned="start"
+              >Pod name</sp-field-label
+            >
             <sp-textfield
               name="label"
               id="f-pod-label"
               required
-              minlength="3"
               value=${ifDefined(this.currentPodConfig?.label)}
             >
-              <sp-help-text slot="negative-help-text"
-                >Name must have at least 3 characters</sp-help-text
-              >
             </sp-textfield>
 
-            <br /><br />
-
-            <sp-field-label for="f-pod-description"
+            <sp-field-label for="f-pod-description" sideAligned="start"
               >Pod description</sp-field-label
             >
             <sp-textfield
@@ -157,9 +176,7 @@ export class UpsertPodWizard extends SNBase {
             >
             </sp-textfield>
 
-            <br /><br />
-
-            <sp-field-label for="f-pod-local-root" required
+            <sp-field-label for="f-pod-local-root" required sideAligned="start"
               >Local folder</sp-field-label
             >
             <sp-textfield
@@ -175,9 +192,10 @@ export class UpsertPodWizard extends SNBase {
               >
             </sp-textfield>
 
-            <br /><br />
-
-            <sp-field-label for="f-pod-storage-root" required
+            <sp-field-label
+              for="f-pod-storage-root"
+              required
+              sideAligned="start"
               >Pod view root uri</sp-field-label
             >
             <sp-textfield
@@ -196,9 +214,7 @@ export class UpsertPodWizard extends SNBase {
               >
             </sp-textfield>
 
-            <br /><br />
-
-            <sp-field-label for="f-pod-owner-webid" required
+            <sp-field-label for="f-pod-owner-webid" required sideAligned="start"
               >Pod owner webid</sp-field-label
             >
             <sp-textfield
@@ -215,7 +231,6 @@ export class UpsertPodWizard extends SNBase {
           </fieldset>
         </form>
       </div>
-
       <sp-button
         slot="button"
         variant="secondary"
@@ -228,20 +243,27 @@ export class UpsertPodWizard extends SNBase {
       >
       <sp-button
         slot="button"
-        variant="negative"
+        variant="accent"
         treatment="fill"
         type="submit"
-        form="pod-config-form"
-        >Upsert</sp-button
+        @click=${() => {
+          const form = /** @type {HTMLFormElement}*/ (this.#formRef.value);
+          if (form.reportValidity()) {
+            form.requestSubmit();
+          }
+        }}
+        >${this.currentPodConfig ? 'Update' : 'Create'}</sp-button
       >
     `;
   }
 
   #pendingTemplate() {
     return html`
-      <div class="wiz-page">
+      <div class="wiz-page wiz-page--pending">
         <sp-progress-circle size="l" indeterminate></sp-progress-circle>
-        <div>Upsert action in progress ...</div>
+        <div>
+          ${this.currentPodConfig ? 'Update' : 'Create'} action in progress ...
+        </div>
       </div>
     `;
   }
@@ -251,48 +273,57 @@ export class UpsertPodWizard extends SNBase {
    */
   #successTemplate(newPodConfig) {
     return html`
-      <div class="wiz-page">
-        Pod view upserted successfully.
-        <sn-pod-info .config=${newPodConfig}></sn-pod-info>
-        <sp-button
-          variant="secondary"
-          treatment="outline"
-          @click=${() =>
-            this.#fireClose({
-              reason: 'success',
-              podConfig: newPodConfig,
-            })}
-          >Close</sp-button
-        >
+      <div class="wiz-page wiz-page--success">
+        Pod view ${this.currentPodConfig ? 'updated' : 'created'} successfully.
+        <sn-pod-info
+          .config=${newPodConfig}
+          id="subject-pod-info"
+        ></sn-pod-info>
       </div>
+      <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        @click=${() =>
+          this.#fireClose({
+            reason: 'success',
+            podConfig: newPodConfig,
+          })}
+        >Close</sp-button
+      >
     `;
   }
 
   #errorTemplate() {
     return html`
-      <div class="wiz-page">
-        Error in deleting pod view.
-        <sp-button
-          variant="secondary"
-          treatment="outline"
-          @click=${() =>
-            this.#fireClose({
-              reason: 'cancel',
-            })}
-          >Close</sp-button
-        >
+      <div class="wiz-page wiz-page--error">
+        Error in ${this.currentPodConfig ? 'updating' : 'creating'} pod view.
       </div>
+      <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        @click=${() =>
+          this.#fireClose({
+            reason: 'cancel',
+          })}
+        >Close</sp-button
+      >
     `;
   }
 
   render() {
     return html`
-      <sp-dialog>
-        <h2 slot="heading">Upsert pod view</h2>
+      <sp-dialog size="l">
+        <h2 slot="heading">
+          ${this.currentPodConfig ? 'Update' : 'Create'} pod view
+        </h2>
         ${this.#task.render({
           initial: () => this.#formTemplate(),
           pending: () => this.#pendingTemplate(),
-          complete: (newPodConfig) => this.#successTemplate(newPodConfig),
+          complete: (newPodConfig) => {
+            return this.#successTemplate(newPodConfig);
+          },
           error: () => this.#errorTemplate(),
         })}
       </sp-dialog>

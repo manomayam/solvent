@@ -20,7 +20,25 @@ export const MOCK_POD1_CONFIG = {
   },
 };
 
+/** @type {PodConfig} */
+export const MOCK_POD2_CONFIG = {
+  id: '1234',
+  label: 'a',
+  storage: {
+    space: {
+      root_uri: 'a:',
+      owner_id: 'a:',
+    },
+    repo: {
+      backend: {
+        root_dir_path: '/',
+      },
+    },
+  },
+};
+
+
 /** @type {PodverseConfig} */
 export const MOCK_PODVERSE1_CONFIG = {
-  pods: [structuredClone(MOCK_POD1_CONFIG)],
+  pods: [structuredClone(MOCK_POD1_CONFIG), structuredClone(MOCK_POD2_CONFIG)],
 };

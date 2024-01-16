@@ -1,5 +1,5 @@
 @import url('../../base/base.styles.css');
 
-:host {
-  display: block;
+#frame {
+    display: block;
 }

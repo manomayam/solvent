@@ -30,7 +30,7 @@
  * @typedef {{
  *  id: string,
  *  storage: StorageConfig,
- *  label?: string,
+ *  label: string,
  *  description?: string,
  * }} PodConfig - Pod configuration.
  */

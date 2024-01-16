@@ -69,10 +69,13 @@ export class DeletePodWizard extends SNBase {
 
   #confirmTemplate = () => {
     return html`
-      <div class="wiz-page">
+      <div class="wiz-page  wiz-page--confirm">
         This action will delete the following pod view. Note that, the actual
         contents in local folder will not be removed.
-        <sn-pod-info .config=${this.podConfig}></sn-pod-info>
+        <sn-pod-info
+          id="subject-pod-info"
+          .config=${this.podConfig}
+        ></sn-pod-info>
       </div>
       <sp-button
         slot="button"
@@ -93,7 +96,7 @@ export class DeletePodWizard extends SNBase {
 
   #pendingTemplate = () => {
     return html`
-      <div class="wiz-page">
+      <div class="wiz-page wiz-page--pending">
         <sp-progress-circle size="l" indeterminate></sp-progress-circle>
         <div>Delete action in progress ...</div>
       </div>
@@ -102,35 +105,35 @@ export class DeletePodWizard extends SNBase {
 
   #successTemplate = () => {
     return html`
-      <div class="wiz-page">
+      <div class="wiz-page wiz-page--success">
         Pod view deleted successfully.
-        <sp-button
-          variant="secondary"
-          treatment="outline"
-          @click=${() => this.#fireClose('success')}
-          >Close</sp-button
-        >
       </div>
+      <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        @click=${() => this.#fireClose('success')}
+        >Close</sp-button
+      >
     `;
   };
 
   #errorTemplate = () => {
     return html`
-      <div class="wiz-page">
-        Error in deleting pod view.
-        <sp-button
-          variant="secondary"
-          treatment="outline"
-          @click=${() => this.#fireClose('cancel')}
-          >Close</sp-button
-        >
-      </div>
+      <div class="wiz-page  wiz-page--error">Error in deleting pod view.</div>
+      <sp-button
+        slot="button"
+        variant="secondary"
+        treatment="outline"
+        @click=${() => this.#fireClose('cancel')}
+        >Close</sp-button
+      >
     `;
   };
 
   render() {
     return html`
-      <sp-dialog>
+      <sp-dialog size="l">
         <h2 slot="heading">Delete pod view</h2>
         ${this.#task.render({
           initial: this.#confirmTemplate,

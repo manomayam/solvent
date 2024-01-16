@@ -1,5 +1,13 @@
 @import url('../../base/base.styles.css');
 
+:host {
+  display: block;
+}
+
+sp-card {
+    inline-size: 100%;
+}
+
 sp-table {
   max-inline-size: max-content;
   display: grid;

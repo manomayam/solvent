@@ -21,5 +21,7 @@
 /dist-www/
 /out-tsc/
 
+sl-typography.js
+
 storybook-static
 custom-elements.json

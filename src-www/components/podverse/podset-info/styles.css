@@ -1,5 +1,21 @@
 @import url('../../base/base.styles.css');
 
+:host {
+  display: block;
+}
+
 ul {
     list-style: square;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spectrum-spacing-200);
+    inline-size: max-content;
+}
+
+li {
+    inline-size: 100%;
+}
+
+li + sn-pod-info {
+    inline-size: 100%;
 }

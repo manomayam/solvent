@@ -1,11 +1,30 @@
 
 @import url('../../base/base.styles.css');
 
-.wiz-page {
-    display: flex;
-    flex-direction: column;
-    min-block-size: 40vb;
-    gap: var(--spectrum-spacing-200);
+:host {
+  display: block;
 }
 
+.wiz-page {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+}
 
+.wiz-page--success,
+.wiz-page--error,
+.wiz-page--pending {
+    block-size: 25vb;
+    align-items: center;
+    justify-content: center;
+}
+
+#subject-pod-info {
+    display: block;
+    box-shadow: var(--spectrum-drop-shadow-blur);
+    align-self: center;
+}
+
+sp-dialog {
+    min-height: min-content;
+}

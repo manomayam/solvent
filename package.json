@@ -1,6 +1,6 @@
 {
-    "name": "solidos-native",
-    "description": "Solid OS native",
+    "name": "solvent",
+    "description": "Native Solid apps powered by Manas and Tauri",
     "license": "MIT",
     "author": "manomayam",
     "version": "0.0.0",
@@ -21,9 +21,11 @@
     },
     "dependencies": {
         "@lit/task": "^1.0.0",
+        "@shoelace-style/shoelace": "^2.12.0",
         "@spectrum-web-components/action-menu": "^0.40.2",
         "@spectrum-web-components/base": "^0.40.2",
         "@spectrum-web-components/button": "^0.40.2",
+        "@spectrum-web-components/button-group": "^0.40.3",
         "@spectrum-web-components/card": "^0.40.2",
         "@spectrum-web-components/dialog": "^0.40.3",
         "@spectrum-web-components/divider": "^0.40.2",
@@ -32,14 +34,17 @@
         "@spectrum-web-components/icons-workflow": "^0.40.2",
         "@spectrum-web-components/link": "^0.40.2",
         "@spectrum-web-components/menu-item": "^0.5.4",
+        "@spectrum-web-components/overlay": "^0.40.3",
         "@spectrum-web-components/progress-circle": "^0.40.3",
         "@spectrum-web-components/styles": "^0.40.2",
         "@spectrum-web-components/table": "^0.40.2",
         "@spectrum-web-components/textfield": "^0.40.3",
         "@spectrum-web-components/theme": "^0.40.2",
         "@tauri-apps/api": "^1.5.3",
+        "immer": "^10.0.3",
         "lit": "^2.5.0",
         "mashlib": "^1.8.9",
+        "typography": "^0.16.24",
         "workbox-window": "^7.0.0"
     },
     "devDependencies": {
