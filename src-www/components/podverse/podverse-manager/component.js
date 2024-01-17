@@ -1,14 +1,19 @@
 import SNBase from '../../base/base.component.js';
 import '../delete-pod-wizard/mod.js';
+import '../podset-info/mod.js';
 import '../upsert-pod-wizard/mod.js';
 import podverseInfoStyles from './styles.css?inline';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog-base.js';
 import '@spectrum-web-components/icons-workflow/icons/sp-icon-new-item.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-brackets-square.js';
+import '@spectrum-web-components/illustrated-message/sp-illustrated-message.js';
 import '@spectrum-web-components/overlay/sp-overlay.js';
 import { produce } from 'immer';
 import { html, unsafeCSS } from 'lit';
 import { choose } from 'lit/directives/choose.js';
+import { when } from 'lit/directives/when.js';
+
 
 export class PodverseManager extends SNBase {
   /**
@@ -127,16 +132,26 @@ export class PodverseManager extends SNBase {
           </sp-button>
         </div>
 
-        <sn-podset-info
-          .config=${this.config.pods}
-          .podActions=${[
-            {
-              action: 'delete',
-              label: 'Delete',
-            },
-          ]}
-          @pod-action-select=${this.#onPodActionSelect}
-        ></sn-podset-info>
+        ${this.config.pods.length > 0
+          ? html`
+              <sn-podset-info
+                .config=${this.config.pods}
+                .podActions=${[
+                  {
+                    action: 'delete',
+                    label: 'Delete',
+                  },
+                ]}
+                @pod-action-select=${this.#onPodActionSelect}
+              ></sn-podset-info>
+            `
+          : html`
+              <sp-illustrated-message
+                heading="No pod views exists yet."
+              >
+            <sp-icon-brackets-square></sp-icon-brackets-square>
+            </sp-illustrated-message>
+            `}
       </div>
 
       <sp-overlay ?open=${this._modeInfo.mode !== 'normal'} type="modal">
@@ -146,12 +161,10 @@ export class PodverseManager extends SNBase {
               'wiz-pod-delete',
               () => html`
                 <sn-delete-pod-wizard
-                  .podConfig=${
-                    this.config.pods.find(
+                  .podConfig=${this.config.pods.find(
                     // @ts-ignore
-                      (pod) => pod.id == this._modeInfo.subjectPodId,
-                    )
-                  }
+                    (pod) => pod.id == this._modeInfo.subjectPodId,
+                  )}
                   @close=${this.#onDeletePodWizClose}
                 ></sn-delete-pod-wizard>
               `,

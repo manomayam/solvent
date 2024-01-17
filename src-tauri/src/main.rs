@@ -125,7 +125,7 @@ async fn main() -> Result<(), BoxError> {
                     window_url
                 },
             )
-            .title("SolidOS Native")
+            .title("Solvent")
             .build()?;
 
             Ok(())

@@ -1,7 +1,7 @@
 [package]
-name = "solidos-native"
+name = "solvent"
 version = "0.0.1"
-description = "SolidOS Native"
+description = "Native solid apps"
 authors = ["Manomayam"]
 license = "MIT OR APACHE"
 repository = ""

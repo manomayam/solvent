@@ -1,0 +1,56 @@
+@import url('../base/base.styles.css');
+
+:host {
+    display: block;
+    background-color: var(--spectrum-background-layer-1-color);
+    color: var(--spectrum-body-color);
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-block-start: 2em;
+}
+
+#logo {
+    background-color: var(--spectrum-background-layer-1-color);
+    block-size: 5em;
+    display: flex;
+    gap: var(--spectrum-spacing-200);
+}
+
+#logo_icon {
+    inline-size: 5em;
+}
+
+#logo_label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#logo_label-main {
+    font-size: var(--spectrum-font-size-1000);
+    font-weight: var(--spectrum-bold-font-weight);
+    line-height: 1;
+}
+
+#logo_label-powered {
+    font-style: var(--spectrum-italic-font-style);
+}
+
+main {
+    margin-block-start: 2em;
+}
+
+#welcome {
+    margin: 0 3em;
+    font-weight: var(--spectrum-medium-font-weight);
+    color: color;
+}
+
+sn-podverse-manager {
+    margin-block-start: 1.5em;
+}

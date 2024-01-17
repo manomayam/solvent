@@ -32,6 +32,7 @@
         "@spectrum-web-components/field-label": "^0.40.3",
         "@spectrum-web-components/help-text": "^0.40.3",
         "@spectrum-web-components/icons-workflow": "^0.40.2",
+        "@spectrum-web-components/illustrated-message": "^0.40.3",
         "@spectrum-web-components/link": "^0.40.2",
         "@spectrum-web-components/menu-item": "^0.5.4",
         "@spectrum-web-components/overlay": "^0.40.3",
