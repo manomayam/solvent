@@ -1,6 +1,10 @@
+// sort-imports-ignore
+
+import '../../../podverse-manager/mock-ipc.js';
+import { podverseConfig } from '../../../podverse-manager/mod.js';
+
 import { html } from 'lit';
 import './mod.js';
-import { MOCK_PODVERSE1_CONFIG } from '../../../podverse-manager/mock-data.js';
 
 /**
  * @type {import("../../../mod.js").CSFMeta}
@@ -20,6 +24,6 @@ export const Default = {
 
   args: {
     /** @type {PodverseConfig} */
-    config: MOCK_PODVERSE1_CONFIG,
+    config: podverseConfig(),
   },
 };

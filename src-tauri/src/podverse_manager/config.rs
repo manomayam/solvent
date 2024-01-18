@@ -49,6 +49,22 @@ pub struct LRcpStorageConfig {
 /// Pod config struct.
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
 pub struct LRcpPodConfig {
+    /// Id of the pod.
+    pub id: Uuid,
+
+    /// Storage config.
+    pub storage: LRcpStorageConfig,
+
+    /// Label of the pod.
+    pub label: Option<String>,
+
+    /// Description of the pod.
+    pub description: Option<String>,
+}
+
+/// Un provisioned pod config struct.
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+pub struct LRcpUnProvisionedPodConfig {
     /// Storage config.
     pub storage: LRcpStorageConfig,
 

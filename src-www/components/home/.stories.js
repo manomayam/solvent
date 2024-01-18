@@ -1,3 +1,7 @@
+// sort-imports-ignore
+
+import '../../podverse-manager/mock-ipc.js';
+
 import './mod.js';
 import { html } from 'lit';
 

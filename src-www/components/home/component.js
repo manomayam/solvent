@@ -1,4 +1,3 @@
-import '../../podverse-manager/mock-ipc.js';
 import { podverseConfig } from '../../podverse-manager/mod.js';
 import SNBase from '../base/base.component.js';
 import '../podverse/podverse-manager/mod.js';
@@ -8,7 +7,6 @@ import '@spectrum-web-components/divider';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import { html, unsafeCSS } from 'lit';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 export class Home extends SNBase {
   static styles = [...headingStyles, ...bodyStyles, unsafeCSS(homeStyles)];
@@ -25,15 +23,15 @@ export class Home extends SNBase {
             </div>
           </div>
         </div>
-      </header>>
+      </header>
 
       <main>
         <section id="welcome" class="spectrum-Body spectrum-Body--sizeL">
           Welcome to <em>Solvent</em>. Solvent lets you use
           <!--span id="solid-icon">${solidIcon}</span!-->
-          <i>Solid</i> apps in native context over your filesystem. You can create pod
-          views over your folders, configure root uri for them to be simulated,
-          and run apps over them.
+          <i>Solid</i> apps in native context over your filesystem. You can
+          create pod views over your folders, configure root uri for them to be
+          simulated, and run apps over them.
         </section>
 
         <section id="podverse">

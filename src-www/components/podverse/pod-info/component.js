@@ -4,6 +4,7 @@ import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/card/sp-card.js';
 import '@spectrum-web-components/link/sp-link.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
+import headingStyles from '@spectrum-web-components/styles/heading.js';
 import '@spectrum-web-components/table/elements.js';
 import { html, nothing, unsafeCSS } from 'lit';
 

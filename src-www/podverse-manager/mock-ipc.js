@@ -23,16 +23,17 @@ mockIPC((cmd, args) => {
     const newPodId = Math.random().toString();
     const newPodConfig = {
       // @ts-ignore
-      ...args.new_pod_config,
+      ...args.newPodConfig,
       id: newPodId,
     };
+    console.log('provisioning mock', newPodConfig);
     MOCK_PODVERSE_CONFIG.pods.push(newPodConfig);
     return structuredClone(newPodConfig);
   }
 
   if (cmd === 'deprovision_proxy_pod') {
     const podIndex = MOCK_PODVERSE_CONFIG.pods.findIndex(
-      (podConfig) => podConfig.id == args.pod_id,
+      (podConfig) => podConfig.id == args.podId,
     );
     if (podIndex < 0) {
       return false;

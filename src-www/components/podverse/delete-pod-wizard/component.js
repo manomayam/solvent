@@ -5,6 +5,7 @@ import { Task } from '@lit/task';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
+import { invoke } from '@tauri-apps/api';
 import { html, unsafeCSS } from 'lit';
 
 /**
@@ -27,16 +28,13 @@ export class DeletePodWizard extends SNBase {
 
   static styles = [unsafeCSS(deletePodWizardStyles)];
 
-  #task = new Task(this, () => {
-    return new Promise((resolve, reject) => {
+  #task = new Task(this, async ([podId]) => {
+    const v = await invoke('deprovision_proxy_pod', { podId });
+    return await // Artificial delay.
+    new Promise((resolve) => {
       setTimeout(() => {
-        if (Math.random() > 0.5) {
-          // @ts-ignore
-          resolve({});
-        } else {
-          reject();
-        }
-      }, 3000);
+        resolve(v);
+      }, 1500);
     });
   });
 
@@ -88,7 +86,7 @@ export class DeletePodWizard extends SNBase {
         slot="button"
         variant="negative"
         treatment="fill"
-        @click=${() => this.#task.run()}
+        @click=${() => this.#task.run([this.podConfig.id])}
         >Delete</sp-button
       >
     `;

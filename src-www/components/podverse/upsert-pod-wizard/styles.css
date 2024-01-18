@@ -40,6 +40,31 @@ fieldset {
     gap: var(--spectrum-spacing-200);
 }
 
-sp-field-label {
-    justify-self: end;
+.field-label {
+    display: block;
+    font-weight: var(--spectrum-medium-font-weight);
 }
+
+.field-description {
+    display: block;
+    font-size: var(--spectrum-font-size-50);
+}
+
+.field-label:has(~ input[required]) {
+    content: '*';
+}
+
+input, textarea {
+    border-width: var(--spectrum-border-width-100);
+    border-radius: var(--spectrum-corner-radius-100);
+    margin-block-start: var(--spectrum-spacing-100);
+}
+
+input {
+    height: calc( 1.2 * var(--spectrum-component-height-75));
+}
+
+input:invalid {
+    border-color: var(--spectrum-negative-border-color-default);
+}
+

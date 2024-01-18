@@ -4,18 +4,30 @@
   display: block;
 }
 
-ul {
+/* ul {
     list-style: square;
     display: flex;
     flex-direction: column;
     gap: var(--spectrum-spacing-200);
     inline-size: max-content;
+} */
+
+#podset-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min-content, 30em));
+    gap: var(--spectrum-spacing-200);
+    align-items: stretch;
 }
 
 li {
-    inline-size: 100%;
+    display: contents;
 }
 
-li + sn-pod-info {
+/* li {
     inline-size: 100%;
-}
+} */
+
+/* li + sn-pod-info {
+    inline-size: 100%;
+} */

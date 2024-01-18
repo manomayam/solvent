@@ -1,4 +1,8 @@
-import { MOCK_POD1_CONFIG } from '../../../podverse-manager/mock-data.js';
+// sort-imports-ignore
+
+import '../../../podverse-manager/mock-ipc.js';
+import { podverseConfig } from '../../../podverse-manager/mod.js';
+
 import './mod.js';
 import { html } from 'lit';
 
@@ -21,7 +25,7 @@ export const UpdateWizard = {
   `,
 
   args: {
-    currentPodConfig: MOCK_POD1_CONFIG,
+    currentPodConfig: podverseConfig().pods[0],
   },
 };
 

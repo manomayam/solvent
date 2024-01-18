@@ -2,7 +2,6 @@
  * @file Podverse manager.
  * This module includes functionality that deals with pod management using tauri interfaces.
  */
-
 import { invoke } from '@tauri-apps/api';
 import { listen } from '@tauri-apps/api/event';
 
@@ -19,7 +18,7 @@ export const PODVERSE_PROXY_ENDPOINT = await invoke('podverse_proxy_endpoint');
  * @type {string}
  */
 export const PODVERSE_PROXY_SESSION_SECRET_TOKEN = await invoke(
-  'podverse_proxy_session_secret_token'
+  'podverse_proxy_session_secret_token',
 );
 
 /**
@@ -68,4 +67,3 @@ export async function provisionProxyPod(newPodConfig) {
     throw error;
   }
 }
-
