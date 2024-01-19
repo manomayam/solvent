@@ -23,6 +23,7 @@ export default {
   envPrefix: ['VITE_', 'TAURI_'],
 
   build: {
+    target: 'esnext',
     outDir: '../dist-www',
     rollupOptions: {
       input: {

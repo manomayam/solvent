@@ -13,13 +13,14 @@ use futures::TryFutureExt;
 use http_uri::invariant::AbsoluteHttpUri;
 use manas_space::BoxError;
 use podverse_manager::{
-    config::{LRcpPodConfig, LRcpPodverseConfig},
+    config::{LRcpPodverseConfig, LRcpUnProvisionedPodConfig},
     PodverseManager,
 };
 use secrecy::ExposeSecret;
 use state::AppState;
 use tauri::{utils::config::AppUrl, AppHandle, Manager, WindowBuilder, WindowUrl};
 use tracing::error;
+use uuid::Uuid;
 
 // pub mod command;
 pub mod podverse_manager;
@@ -52,10 +53,10 @@ async fn podverse_config(state: tauri::State<'_, AppState>) -> Result<LRcpPodver
     Ok(state.podverse_manager.podverse_config().await.clone())
 }
 
-/// Provision a new proxy pods.
+/// Provision a new proxy pod.
 #[tauri::command]
 async fn provision_proxy_pod(
-    new_pod_config: LRcpPodConfig,
+    new_pod_config: LRcpUnProvisionedPodConfig,
     state: tauri::State<'_, AppState>,
     app_handle: AppHandle,
 ) -> Result<(), String> {
@@ -67,6 +68,23 @@ async fn provision_proxy_pod(
 
     emit_podverse_config_change_event(&state, &app_handle).await?;
     Ok(())
+}
+
+/// De provision the proxy pod with given id.
+#[tauri::command]
+async fn deprovision_proxy_pod(
+    pod_id: Uuid,
+    state: tauri::State<'_, AppState>,
+    app_handle: AppHandle,
+) -> Result<bool, String> {
+    let is_exists = state
+        .podverse_manager
+        .deprovision_pod(pod_id)
+        .await
+        .map_err(|e| e.to_string())?;
+
+    emit_podverse_config_change_event(&state, &app_handle).await?;
+    Ok(is_exists)
 }
 
 /// Emit an event to all windows notifying podverse config change.
@@ -113,6 +131,7 @@ async fn main() -> Result<(), BoxError> {
             podverse_proxy_session_secret_token,
             podverse_config,
             provision_proxy_pod,
+            deprovision_proxy_pod,
             greet,
         ])
         .setup(move |app| {

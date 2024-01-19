@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -6,7 +6,8 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta name="Description" content="Put your description here." />
+    <meta name="Description" content="Solvent." />
+    <title>Solvent</title>
     <base href="/" />
 
     <style>
@@ -15,31 +16,30 @@
         margin: 0;
         padding: 0;
         font-family: sans-serif;
-        background-color: #ededed;
+      }
+
+      sn-home {
+        background-color: var(--spectrum-background-color-layer2);
+        margin: 0 auto;
+        max-width: 55.8em;
       }
     </style>
     <title>app-shell</title>
     <script type="module" src="./mod.js"></script>
+    <script type="module">
+      // import './podverse-manager/mock-ipc.js';
+      import './components/home/mod.js';
+      import '@spectrum-web-components/theme/sp-theme.js';
+      import '@spectrum-web-components/theme/theme-light.js';
+    </script>
   </head>
 
   <body>
-    <!-- <app-shell></app-shell> -->
-    <header>
-      <h1>SolidOS Native.</h1>
-    </header>
-    <main>
-      <section>
-        <h2>Provisioned Pods</h2>
-        <ol id="provisioned-pods"></ol>
-      </section>
-      <section>
-        Go to
-        <a href="./solidos/index.html?root_uri=http%3A%2F%2Flocalhost%3A3000%2F"
-          >SolidOS</a
-        >
-      </section>
-    </main>
+    <sp-theme theme="spectrum" color="light">
+      <!-- <div id="home-wrapper"> -->
+      <sn-home> </sn-home>
 
-    <script type="module" src="./app-shell.js"></script>
+      <!-- </div> -->
+    </sp-theme>
   </body>
 </html>

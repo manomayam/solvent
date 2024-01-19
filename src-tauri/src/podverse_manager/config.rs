@@ -10,6 +10,7 @@ use futures::TryFutureExt;
 use http_uri::invariant::HierarchicalTrailingSlashHttpUri;
 use tauri::{api::path::app_config_dir, Config};
 use tracing::{error, info, warn};
+use uuid::Uuid;
 use webid::WebId;
 
 /// Repo backend config struct.

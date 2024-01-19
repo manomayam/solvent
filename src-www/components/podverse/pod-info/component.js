@@ -118,7 +118,7 @@ export class PodInfo extends SNBase {
     return html`
       <sp-card>
         <sp-link
-          href="/solidos/index.html?${this.config.storage.space.root_uri}"
+          href="/solidos/index.html?root_uri=${encodeURIComponent(this.config.storage.space.root_uri)}"
           slot="heading"
           >${this.config.label ?? 'Pod view'}</sp-link
         >

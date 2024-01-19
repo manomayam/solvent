@@ -5498,7 +5498,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solidos-native"
+name = "solvent"
 version = "0.0.1"
 dependencies = [
  "form_urlencoded",

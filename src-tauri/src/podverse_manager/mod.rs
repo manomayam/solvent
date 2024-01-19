@@ -1,14 +1,14 @@
 //! I provide types to represent podverse proxy recipes.
 //!  
 
-use std::{convert::Infallible, net::SocketAddr, path::PathBuf, sync::Arc};
+use std::{convert::Infallible, net::SocketAddr, sync::Arc};
 
 use futures::{future::BoxFuture, TryFutureExt};
 use http_uri::invariant::AbsoluteHttpUri;
 use hyper::{service::make_service_fn, Server};
 use manas_http::service::impl_::NormalValidateTargetUri;
 use manas_server::CW;
-use manas_space::{resource::uri::SolidResourceUri, BoxError};
+use manas_space::BoxError;
 use manas_storage::service::cors::LiberalCors;
 use once_cell::sync::OnceCell;
 use secrecy::Secret;
@@ -16,6 +16,7 @@ use tauri::Config;
 use tokio::sync::{RwLock, RwLockReadGuard};
 use tower_http::catch_panic::{CatchPanic, DefaultResponseForPanic};
 use tracing::error;
+use uuid::Uuid;
 
 use crate::podverse_manager::{
     config::{load_podverse_config, write_podverse_config},
@@ -23,7 +24,7 @@ use crate::podverse_manager::{
 };
 
 use self::{
-    config::{LRcpPodConfig, LRcpPodverseConfig},
+    config::{LRcpPodConfig, LRcpPodverseConfig, LRcpUnProvisionedPodConfig},
     lproxy::{LProxyConfig, LProxyService},
     podverse::{LRcpPodServiceFactory, LRcpPodSet, LRcpPodSetService},
 };
@@ -39,10 +40,6 @@ type ProxyService = CatchPanic<
     LiberalCors<LProxyService<NormalValidateTargetUri<LRcpPodSetService>>>,
     DefaultResponseForPanic,
 >;
-
-/// A struct for representing pod key.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct PodKey(SolidResourceUri, PathBuf);
 
 /// Podverse manager.
 #[derive(Clone)]
@@ -188,11 +185,18 @@ impl PodverseManager {
     }
 
     /// Provision a new pod.
-    pub async fn provision_pod(&self, new_pod_config: LRcpPodConfig) -> Result<(), BoxError> {
+    pub async fn provision_pod(
+        &self,
+        new_pod_config: LRcpUnProvisionedPodConfig,
+    ) -> Result<(), BoxError> {
         // Construct updated podverse config.
         let mut podverse_config = self.podverse_config.read().await.clone();
-        // TODO deduplicate.
-        podverse_config.pods.push(new_pod_config);
+        podverse_config.pods.push(LRcpPodConfig {
+            id: uuid::Uuid::new_v4(),
+            storage: new_pod_config.storage,
+            label: new_pod_config.label,
+            description: new_pod_config.description,
+        });
 
         // Persist the new podverse config.
         write_podverse_config(&self.app_config, &podverse_config)
@@ -205,11 +209,31 @@ impl PodverseManager {
         Ok(())
     }
 
-    /// Deprovision a new pod.
-    pub async fn deprovision_pod(&self, _pod_key: PodKey) -> Result<(), BoxError> {
+    /// Deprovision the pod with given id.
+    /// Returns Ok(true) if the pod exists.
+    pub async fn deprovision_pod(&self, pod_id: Uuid) -> Result<bool, BoxError> {
         // Construct updated podverse config.
-        let mut _podverse_config = self.podverse_config.read().await.clone();
+        let mut podverse_config = self.podverse_config.read().await.clone();
 
-        todo!()
+        if let Some(pos) = podverse_config
+            .pods
+            .iter()
+            .position(|pod_config| pod_config.id == pod_id)
+        {
+            podverse_config.pods.swap_remove(pos);
+        } else {
+            // Return if not found.
+            return Ok(false);
+        }
+
+        // Persist the new podverse config.
+        write_podverse_config(&self.app_config, &podverse_config)
+            .inspect_err(|e| error!("Error in writing the new podverse config. {e}"))
+            .await?;
+
+        // Invalidate the podverse.
+        self._invalidate_podverse(podverse_config).await?;
+
+        Ok(true)
     }
 }

@@ -2,12 +2,10 @@
  * @file Sets up solidos data-browser in current html page.
  */
 // @ts-nocheck
-
-import './setup_sw.js';
 import { podverseConfig } from '../podverse-manager/mod.js';
-import { PodConfig } from '../podverse-manager/config.js';
+import './setup_sw.js';
 
-console.log('In solidos/index.ts');
+console.log('In solidos/mod.js');
 
 /**
  * Get the config of pod with given storage root uri.
@@ -26,11 +24,14 @@ function getPodConfig(rootUri) {
 // Resolve pod config from supplied root uri.
 const params = new URLSearchParams(location.search);
 const rootUri = params.get('root_uri');
+console.log({ rootUri });
 if (!rootUri) {
+  console.log('NPODR');
   throw Error('Root uri is not provided.');
 }
 const podConfig = getPodConfig(rootUri);
 if (!podConfig) {
+  console.log('NPODR2');
   throw Error('No pod resolved for given root uri.');
 }
 console.log({
