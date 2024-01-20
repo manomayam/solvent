@@ -188,15 +188,16 @@ impl PodverseManager {
     pub async fn provision_pod(
         &self,
         new_pod_config: LRcpUnProvisionedPodConfig,
-    ) -> Result<(), BoxError> {
+    ) -> Result<LRcpPodConfig, BoxError> {
         // Construct updated podverse config.
         let mut podverse_config = self.podverse_config.read().await.clone();
-        podverse_config.pods.push(LRcpPodConfig {
+        let new_pod_config = LRcpPodConfig {
             id: uuid::Uuid::new_v4(),
             storage: new_pod_config.storage,
             label: new_pod_config.label,
             description: new_pod_config.description,
-        });
+        };
+        podverse_config.pods.push(new_pod_config.clone());
 
         // Persist the new podverse config.
         write_podverse_config(&self.app_config, &podverse_config)
@@ -206,7 +207,7 @@ impl PodverseManager {
         // Invalidate the podverse.
         self._invalidate_podverse(podverse_config).await?;
 
-        Ok(())
+        Ok(new_pod_config)
     }
 
     /// Deprovision the pod with given id.

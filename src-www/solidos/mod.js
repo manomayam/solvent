@@ -4,8 +4,28 @@
 // @ts-nocheck
 import { podverseConfig } from '../podverse-manager/mod.js';
 import './setup_sw.js';
+import { WebviewWindow } from '@tauri-apps/api/window';
 
 console.log('In solidos/mod.js');
+
+document.addEventListener('click', (ev) => {
+  const elem = /** @type {Element} */ (ev.target);
+  console.log('Doc click event.', ev);
+  if (elem.tagName === 'A' && elem.getAttribute('target') === '_blank') {
+    console.log('Anchor click event.', ev);
+    ev.preventDefault();
+    const webview = new WebviewWindow(
+      `solidos-${Math.round(Math.random() * 100000)}`,
+      {
+        url: elem.getAttribute('href'),
+      },
+    );
+    webview.once('tauri://error', function (e) {
+      // an error occurred during webview window creation
+      console.log('Error in opening window', e);
+    });
+  }
+});
 
 /**
  * Get the config of pod with given storage root uri.

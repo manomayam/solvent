@@ -13,7 +13,7 @@ use futures::TryFutureExt;
 use http_uri::invariant::AbsoluteHttpUri;
 use manas_space::BoxError;
 use podverse_manager::{
-    config::{LRcpPodverseConfig, LRcpUnProvisionedPodConfig},
+    config::{LRcpPodverseConfig, LRcpPodConfig, LRcpUnProvisionedPodConfig},
     PodverseManager,
 };
 use secrecy::ExposeSecret;
@@ -59,15 +59,15 @@ async fn provision_proxy_pod(
     new_pod_config: LRcpUnProvisionedPodConfig,
     state: tauri::State<'_, AppState>,
     app_handle: AppHandle,
-) -> Result<(), String> {
-    state
+) -> Result<LRcpPodConfig, String> {
+    let new_pod_config = state
         .podverse_manager
         .provision_pod(new_pod_config)
         .await
         .map_err(|e| e.to_string())?;
 
     emit_podverse_config_change_event(&state, &app_handle).await?;
-    Ok(())
+    Ok(new_pod_config)
 }
 
 /// De provision the proxy pod with given id.

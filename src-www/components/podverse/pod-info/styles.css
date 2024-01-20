@@ -26,3 +26,14 @@ sp-table-row {
 [slot="description"]::before {
     content: '';
 }
+
+[slot="footer"] {
+    display: flex;
+    align-items: center;
+    gap: var(--spectrum-spacing-200);
+}
+
+#open-with {
+    font-size: var(--spectrum-font-size-100);
+    font-weight: var(--spectrum-medium-font-weight);
+}

@@ -51,6 +51,13 @@ main {
     color: color;
 }
 
+#solid-icon > img {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-inline-start: 0.1em;
+}
+
 sn-podverse-manager {
     margin-block-start: 1.5em;
 }

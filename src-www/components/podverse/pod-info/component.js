@@ -1,11 +1,16 @@
+import solidIcon from '../../../assets/solid.png';
 import SNBase from '../../base/base.component.js';
 import podInfoStyles from './styles.css?inline';
+import '@spectrum-web-components/action-button';
+import '@spectrum-web-components/action-group';
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/link/sp-link.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
 import '@spectrum-web-components/table/elements.js';
+import { WebviewWindow } from '@tauri-apps/api/window';
 import { html, nothing, unsafeCSS } from 'lit';
 
 /**
@@ -55,7 +60,7 @@ export class PodInfo extends SNBase {
     /**
      *
      * @type {PodAction[]?}
-     * 
+     *
      */
     this.actions = [];
   }
@@ -78,6 +83,23 @@ export class PodInfo extends SNBase {
     );
     e.stopPropagation();
   };
+
+  /**
+   * @param {string} appName
+   * @param {string} appUri
+   */
+  #openAppInNewWindow(appName, appUri) {
+    const webview = new WebviewWindow(
+      `${appName}-${Math.round(Math.random() * 100000)}`,
+      {
+        url: appUri,
+      },
+    );
+    webview.once('tauri://error', function (e) {
+      // an error occurred during webview window creation
+      console.log('Error in opening window', e);
+    });
+  }
 
   render() {
     let actionMenu =
@@ -118,7 +140,9 @@ export class PodInfo extends SNBase {
     return html`
       <sp-card>
         <sp-link
-          href="/solidos/index.html?root_uri=${encodeURIComponent(this.config.storage.space.root_uri)}"
+          href="/solidos/index.html?root_uri=${encodeURIComponent(
+            this.config.storage.space.root_uri,
+          )}"
           slot="heading"
           >${this.config.label ?? 'Pod view'}</sp-link
         >
@@ -133,6 +157,26 @@ export class PodInfo extends SNBase {
             ${this.config.description ?? nothing}
           </div>
           ${propTable}
+        </div>
+
+        <div slot="footer">
+          <div id="open-with">Open with:</div>
+          <sp-action-group emphasized>
+            <sp-action-button
+              size="m"
+              emphasized
+              @click=${() =>
+                this.#openAppInNewWindow(
+                  'SolidOS',
+                  `/solidos/index.html?root_uri=${encodeURIComponent(
+                    this.config.storage.space.root_uri,
+                  )}`,
+                )}
+            >
+              <sp-icon slot="icon" src=${solidIcon}> </sp-icon>
+              Solid OS
+            </sp-action-button>
+          </sp-action-group>
         </div>
       </sp-card>
     `;

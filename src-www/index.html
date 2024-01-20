@@ -21,21 +21,22 @@
       sn-home {
         background-color: var(--spectrum-background-color-layer2);
         margin: 0 auto;
-        max-width: 55.8em;
+        max-width: 75.8em;
       }
     </style>
     <title>app-shell</title>
     <script type="module" src="./mod.js"></script>
     <script type="module">
-      // import './podverse-manager/mock-ipc.js';
+    //   import './podverse-manager/mock-ipc.js';
       import './components/home/mod.js';
       import '@spectrum-web-components/theme/sp-theme.js';
       import '@spectrum-web-components/theme/theme-light.js';
+      import '@spectrum-web-components/theme/scale-medium.js';
     </script>
   </head>
 
   <body>
-    <sp-theme theme="spectrum" color="light">
+    <sp-theme theme="spectrum" color="light" scale="medium">
       <!-- <div id="home-wrapper"> -->
       <sn-home> </sn-home>
 
