@@ -5,13 +5,14 @@ import '@spectrum-web-components/action-button';
 import '@spectrum-web-components/action-group';
 import '@spectrum-web-components/action-menu/sync/sp-action-menu.js';
 import '@spectrum-web-components/card/sp-card.js';
+import '@spectrum-web-components/divider';
 import '@spectrum-web-components/icon/sp-icon.js';
 import '@spectrum-web-components/link/sp-link.js';
 import bodyStyles from '@spectrum-web-components/styles/body.js';
 import headingStyles from '@spectrum-web-components/styles/heading.js';
-import '@spectrum-web-components/table/elements.js';
 import { WebviewWindow } from '@tauri-apps/api/window';
 import { html, nothing, unsafeCSS } from 'lit';
+
 
 /**
  * @typedef {Object} PodAction - Pod action.
@@ -45,7 +46,7 @@ export class PodInfo extends SNBase {
     };
   }
 
-  static styles = [bodyStyles, unsafeCSS(podInfoStyles)];
+  static styles = [...bodyStyles, ...headingStyles, unsafeCSS(podInfoStyles)];
 
   constructor() {
     super();
@@ -87,12 +88,14 @@ export class PodInfo extends SNBase {
   /**
    * @param {string} appName
    * @param {string} appUri
+   * @param {string | undefined} appTitle
    */
-  #openAppInNewWindow(appName, appUri) {
+  #openAppInNewWindow(appName, appUri, appTitle) {
     const webview = new WebviewWindow(
       `${appName}-${Math.round(Math.random() * 100000)}`,
       {
         url: appUri,
+        title: `${appTitle || appName}::${this.config.label}::Solvent`,
       },
     );
     webview.once('tauri://error', function (e) {
@@ -121,42 +124,32 @@ export class PodInfo extends SNBase {
           `
         : nothing;
 
-    let propTable = html`
-      <sp-table quiet>
-        <sp-table-row>
-          <sp-table-head-cell>Local folder:</sp-table-head-cell>
-          <sp-table-cell
-            >${this.config.storage.repo.backend.root_dir_path}</sp-table-cell
-          >
-        </sp-table-row>
-
-        <sp-table-row>
-          <sp-table-head-cell> Pod view root: </sp-table-head-cell>
-          <sp-table-cell> ${this.config.storage.space.root_uri} </sp-table-cell>
-        </sp-table-row>
-      </sp-table>
+    const propTable2 = html`
+      <dl>
+        <dt>Local folder:</dt>
+        <dd>${this.config.storage.repo.backend.root_dir_path}</dd>
+        <dt>Pod view root:</dt>
+        <dd>${this.config.storage.space.root_uri}</dd>
+      </dl>
     `;
 
     return html`
       <sp-card>
-        <sp-link
-          href="/solidos/index.html?root_uri=${encodeURIComponent(
-            this.config.storage.space.root_uri,
-          )}"
-          slot="heading"
-          >${this.config.label ?? 'Pod view'}</sp-link
-        >
+        <h3 slot="heading" class="spectrum-Heading spectrum-Heading--sizeM">
+          ${this.config.label ?? 'Pod view'}
+          <sp-divider size="s"></sp-divider>
+        </h3>
 
         ${actionMenu}
 
         <div slot="description">
           <div
             id="description-content"
-            class="spectrum-Body spectrum-Body--sizeM"
+            class="spectrum-Body spectrum-Body--sizeL"
           >
             ${this.config.description ?? nothing}
           </div>
-          ${propTable}
+          ${propTable2}
         </div>
 
         <div slot="footer">
@@ -171,6 +164,7 @@ export class PodInfo extends SNBase {
                   `/solidos/index.html?root_uri=${encodeURIComponent(
                     this.config.storage.space.root_uri,
                   )}`,
+                  'Solid OS',
                 )}
             >
               <sp-icon slot="icon" src=${solidIcon}> </sp-icon>

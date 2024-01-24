@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
   <head>
@@ -12,17 +12,55 @@
     <title>SolidOS Native</title>
     <link type="text/css" rel="stylesheet" href="../assets/mash.css" />
     <script type="text/javascript" src="../assets/mashlib.min.js"></script>
-    <!-- <script type="module" src="./setup_sw.js"></script> -->
     <script type="module" src="./mod.js"></script>
+
+    <script type="module"></script>
+
+    <style>
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-block-end: 1px dotted blueviolet;
+        margin-block-end: 0.9em;
+      }
+
+      #logo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5em;
+      }
+
+      #logo > img {
+        block-size: 3em;
+      }
+
+      #logo-title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.3em;
+      }
+
+      #pod-label {
+        color: #888;
+        font-size: 0.8em;
+      }
+    </style>
   </head>
 
   <body>
-    <header>
-      SolidOS<br />
-      Pod: <span id="pod-label"></span><br />
-      <div id="pod-description"></div>
-    </header>
-    <hr />
+      <header>
+        <h3 id="logo">
+          <img src="../assets/solid.png" />
+          <div id="logo-title">
+            Solid OS<br />
+            <span id="pod-label"></span>
+          </div>
+        </h3>
+      </header>
 
     <table style="width: 100%">
       <tr>

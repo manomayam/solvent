@@ -77,11 +77,11 @@ sw.addEventListener('message', (event) => {
  * @return  {boolean}
  */
 function isProxiedUri(uri) {
-  clLog('in isProxiedUri');
+  // clLog('in isProxiedUri');
   let isProxied = podverseConfig.pods.some((pod) =>
     uri.startsWith(pod.storage.space.root_uri),
   );
-  clLog({ uri, isProxied });
+  // clLog({ uri, isProxied });
   return isProxied;
 }
 

@@ -7,7 +7,7 @@ use std::{
 };
 
 use futures::future::{self, Either, Ready};
-use http::{Request, Response, StatusCode};
+use http::{Method, Request, Response, StatusCode};
 use http_api_problem::ApiError;
 use http_uri::invariant::AbsoluteHttpUri;
 use hyper::Body;
@@ -68,6 +68,17 @@ where
             .and_then(|res_uri_str| AbsoluteHttpUri::try_new_from(res_uri_str.as_str()).ok())
         {
             req.extensions_mut().insert(original_res_uri);
+
+            // TODO MUST remove this after fixing mashlib for container creation.
+            if (req.method() == Method::PUT || req.method() == Method::PATCH)
+                && req.headers().get("content-type").is_none()
+            {
+                req.headers_mut().append(
+                    "content-type",
+                    "text/turtle".parse().expect("Must be valid"),
+                );
+            }
+
             // Delegate to inner service.
             Either::Left(self.inner.call(req))
         } else {

@@ -19,6 +19,9 @@
             },
             "window": {
                 "create": true
+            },
+            "dialog": {
+                "all": true
             }
         },
         "bundle": {

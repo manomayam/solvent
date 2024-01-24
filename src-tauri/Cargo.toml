@@ -13,32 +13,38 @@ edition = "2021"
 tauri-build = { version = "1.5", features = [] }
 
 [dependencies]
-tauri = { version = "1.5", features = [ "window-create", "shell-open"] }
+tauri = { version = "1.5", features = [
+    "dialog-all",
+    "window-create",
+    "shell-open",
+] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
-manas_server = { git = "https://github.com/manomayam/manas.git", default-features = false }
-manas_space = { git = "https://github.com/manomayam/manas.git" }
-manas_storage = { git = "https://github.com/manomayam/manas.git" }
-manas_podverse = { git = "https://github.com/manomayam/manas.git" }
+manas_server = { git = "https://github.com/manomayam/manas.git", default-features = false, rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
+manas_space = { git = "https://github.com/manomayam/manas.git", rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
+manas_storage = { git = "https://github.com/manomayam/manas.git", rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
+manas_podverse = { git = "https://github.com/manomayam/manas.git", rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
 manas_repo_layers = { git = "https://github.com/manomayam/manas.git", features = [
     "patching",
     "validating",
     "dconneging",
-] }
+], rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
 manas_repo_opendal = { git = "https://github.com/manomayam/manas.git", features = [
     "backend-fs",
-] }
+], rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
 manas_http = { git = "https://github.com/manomayam/manas.git", features = [
     "service",
-] }
+], rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
 name_locker = { git = "https://github.com/manomayam/manas.git", features = [
     "inmem",
-] }
+], rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
 http_uri = { git = "https://github.com/manomayam/manas.git", features = [
     "serde",
-] }
-webid = { git = "https://github.com/manomayam/manas.git", features = ["serde"] }
+], rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
+webid = { git = "https://github.com/manomayam/manas.git", features = [
+    "serde",
+], rev = "1b5960fff314c98ba92fe83e8de152f6519fc337" }
 uuid = { version = "1.4.1", features = ["v4"] }
 secrecy = "0.8.0"
 once_cell = "1.18.0"

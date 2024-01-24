@@ -2,14 +2,17 @@ import SNBase from '../../base/base.component.js';
 import '../pod-info/mod.js';
 import upsertPodWizardStyles from './styles.css?inline';
 import { Task } from '@lit/task';
+import '@spectrum-web-components/action-button';
 import '@spectrum-web-components/button-group/sp-button-group.js';
 import '@spectrum-web-components/button/sp-button.js';
 import '@spectrum-web-components/dialog/sp-dialog.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import '@spectrum-web-components/help-text/sp-help-text.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-folder-open.js';
 import '@spectrum-web-components/progress-circle/sp-progress-circle.js';
 import '@spectrum-web-components/textfield/sp-textfield.js';
 import { invoke } from '@tauri-apps/api';
+import { open as openDialog } from '@tauri-apps/api/dialog';
 import { html, unsafeCSS } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -58,6 +61,7 @@ export class UpsertPodWizard extends SNBase {
   });
 
   #formRef = createRef();
+  #folderInputRef = createRef();
 
   constructor() {
     super();
@@ -136,6 +140,24 @@ export class UpsertPodWizard extends SNBase {
     this.#task.run([newPodConfig]);
   }
 
+  async #openFolder() {
+    // Open a selection dialog for image files
+    const selected = await openDialog({
+      multiple: false,
+      directory: true,
+    });
+    if (selected === null) {
+      // user cancelled the selection
+      return;
+    } else {
+      // user selected a single dir
+      const input = /** @type {HTMLInputElement} */ (
+        this.#folderInputRef.value
+      );
+      input.value = /** @type {string} */ (selected);
+    }
+  }
+
   #formTemplate() {
     return html`
       <div class="wiz-page wiz-page--form">
@@ -179,7 +201,13 @@ export class UpsertPodWizard extends SNBase {
                 value=${ifDefined(
                   this.currentPodConfig?.storage.repo.backend.root_dir_path,
                 )}
+                disabled
+                ${ref(this.#folderInputRef)}
               />
+              <sp-action-button @click=${() => this.#openFolder()}>
+                <sp-icon-folder-open slot="icon"></sp-icon-folder-open>
+                Pick
+              </sp-action-button>
             </label>
 
             <label>
