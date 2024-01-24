@@ -47,7 +47,7 @@
         "@tauri-apps/api": "^1.5.3",
         "immer": "^10.0.3",
         "lit": "^2.5.0",
-        "mashlib": "^1.8.9",
+        "mashlib": "=1.8.7",
         "typography": "^0.16.24",
         "workbox-window": "^7.0.0"
     },

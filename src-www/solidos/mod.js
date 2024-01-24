@@ -69,6 +69,12 @@ window.SolidAppContext = {
 };
 window.document.title = `(${podConfig.label}) - SolidOs`;
 
+window.$SolidTestEnvironment = {
+  iconBase: '/solidos/solid-ui/icons/',
+  originalIconBase: '/solidos/solid-ui/originalIcons/',
+  username: podConfig.storage.space.owner_id,
+};
+
 // Setup mashlib.
 const $rdf = UI.rdf;
 const dom = document;
