@@ -37,7 +37,7 @@
             ]
         },
         "security": {
-            "csp": "default-src blob: data: filesystem: ws: wss: http: https: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+            "csp": null
         },
         "windows": []
     }

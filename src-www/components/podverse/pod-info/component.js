@@ -94,7 +94,9 @@ export class PodInfo extends SNBase {
     const webview = new WebviewWindow(
       `${appName}-${Math.round(Math.random() * 100000)}`,
       {
-        url: appUri,
+        // NOTE: tauri interprets relative urls differently in prod build.
+        // Thus must convert to absolute.
+        url: new URL(appUri, window.location.href).toString(),
         title: `${appTitle || appName}::${this.config.label}::Solvent`,
       },
     );
@@ -124,7 +126,7 @@ export class PodInfo extends SNBase {
           `
         : nothing;
 
-    const propTable2 = html`
+    const propTable = html`
       <dl>
         <dt>Local folder:</dt>
         <dd>${this.config.storage.repo.backend.root_dir_path}</dd>
@@ -149,7 +151,7 @@ export class PodInfo extends SNBase {
           >
             ${this.config.description ?? nothing}
           </div>
-          ${propTable2}
+          ${propTable}
         </div>
 
         <div slot="footer">
