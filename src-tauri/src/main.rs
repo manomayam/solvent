@@ -13,7 +13,7 @@ use futures::TryFutureExt;
 use http_uri::invariant::AbsoluteHttpUri;
 use manas_space::BoxError;
 use podverse_manager::{
-    config::{LRcpPodverseConfig, LRcpPodConfig, LRcpUnProvisionedPodConfig},
+    config::{LRcpPodConfig, LRcpPodverseConfig, LRcpUnProvisionedPodConfig},
     PodverseManager,
 };
 use secrecy::ExposeSecret;
@@ -145,7 +145,8 @@ async fn main() -> Result<(), BoxError> {
                 },
             )
             .title("Solvent")
-            .build()?;
+            .build()?
+            .maximize()?;
 
             Ok(())
         })

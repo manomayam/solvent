@@ -39,7 +39,7 @@ export class PodsetInfo extends SNBase {
    *
    * @param   {import('../pod-info/component.js').ActionSelectEvent}  e
    */
-  #onPodActionSelect = (e) => {
+  #onPodActionSelect(e) {
     e.stopPropagation();
     this.dispatchEvent(
       new CustomEvent('pod-action-select', {
@@ -50,18 +50,9 @@ export class PodsetInfo extends SNBase {
     );
   };
 
-  createRenderRoot() {
-    let shadowRoot = super.createRenderRoot();
-    shadowRoot.addEventListener(
-      'action-select',
-      /** @type {EventListener}*/ (this.#onPodActionSelect),
-    );
-    return shadowRoot;
-  }
-
   render() {
     return html`
-      <ul id="podset-list">
+      <ul id="podset-list" @action-select=${this.#onPodActionSelect}>
         ${repeat(
           this.config,
           (podConfig) => podConfig.id,

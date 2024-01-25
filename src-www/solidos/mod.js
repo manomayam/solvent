@@ -43,7 +43,7 @@ function getPodConfig(rootUri) {
 
 // Resolve pod config from supplied root uri.
 // Note, we use hash, as tauri has issue with qparams in prod build.
-const params = new URLSearchParams(location.hash);
+const params = new URLSearchParams(location.hash.substring(1));
 const rootUri = params.get('root_uri');
 console.log({ rootUri });
 if (!rootUri) {
@@ -82,13 +82,13 @@ const dom = document;
 $rdf.Fetcher.crossSiteProxyTemplate = self.origin + '/xss?uri={uri}';
 const outliner = panes.getOutliner(dom); //function from solid-panes
 const podLabelElem = dom.getElementById('pod-label');
-const podDescrElem = dom.getElementById('pod-description');
+// const podDescrElem = dom.getElementById('pod-description');
 
 function go() {
   const subject = $rdf.sym(rootUri);
   outliner.GotoSubject(subject, true, undefined, true, undefined);
   podLabelElem.innerHTML = podConfig.label;
-  podDescrElem.innerHTML = podConfig.description;
+  // podDescrElem.innerHTML = podConfig.description;
   // dom.getElementById('pod-description')?.innerHTML = podConfig.description;
   // mungeLoginArea();
 }
