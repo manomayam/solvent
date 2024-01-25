@@ -163,7 +163,7 @@ export class PodInfo extends SNBase {
               @click=${() =>
                 this.#openAppInNewWindow(
                   'SolidOS',
-                  `/solidos/index.html?root_uri=${encodeURIComponent(
+                  `/solidos/index.html#root_uri=${encodeURIComponent(
                     this.config.storage.space.root_uri,
                   )}`,
                   'Solid OS',

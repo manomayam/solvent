@@ -42,7 +42,8 @@ function getPodConfig(rootUri) {
 }
 
 // Resolve pod config from supplied root uri.
-const params = new URLSearchParams(location.search);
+// Note, we use hash, as tauri has issue with qparams in prod build.
+const params = new URLSearchParams(location.hash);
 const rootUri = params.get('root_uri');
 console.log({ rootUri });
 if (!rootUri) {
