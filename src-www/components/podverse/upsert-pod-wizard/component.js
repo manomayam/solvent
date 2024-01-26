@@ -113,6 +113,12 @@ export class UpsertPodWizard extends SNBase {
       formData,
     });
 
+    
+    let storageRoot = /** @type {string} */ (formData.get('storageRoot')?.toString());
+    if (!storageRoot.endsWith('/')) {
+      storageRoot = storageRoot + '/';
+    }
+
     /** @type {Omit<PodConfig, 'id'> | PodConfig} */
     let newPodConfig = {
       id: this.currentPodConfig?.id,
@@ -127,9 +133,7 @@ export class UpsertPodWizard extends SNBase {
           },
         },
         space: {
-          root_uri: /** @type {String}*/ (
-            formData.get('storageRoot')?.toString()
-          ),
+          root_uri: storageRoot,
           owner_id: /** @type {String}*/ (formData.get('ownerId')?.toString()),
         },
       },
